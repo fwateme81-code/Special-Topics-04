@@ -294,7 +294,6 @@ uv add -r requirements.txt
 # After adding new packages
 pip freeze > requirements.txt
 ```
-
 ---
 
 ## 🔍 Understanding uv Internally
