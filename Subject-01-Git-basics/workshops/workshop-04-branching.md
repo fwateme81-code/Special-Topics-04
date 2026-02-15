@@ -89,12 +89,12 @@ git branch
 
 **Instructions:**
 ```bash
-git checkout feature-login
+git switch feature-login
 ```
 
 **Alternative (create and switch in one command):**
 ```bash
-git checkout -b feature-user-profile  # Creates and switches
+git switch -c feature-user-profile  # Creates and switches
 ```
 
 **Verification:**
@@ -141,7 +141,7 @@ git status
 
 **Instructions:**
 ```bash
-git checkout main
+git switch main
 ```
 
 **Verification:**
@@ -171,7 +171,7 @@ This shows both branches and their relationship.
 
 **Instructions:**
 ```bash
-git checkout -b feature-dashboard
+git switch -c feature-dashboard
 echo "# Dashboard Feature" > dashboard.py
 echo "def show_dashboard(user):" >> dashboard.py
 echo "    # TODO: Implement dashboard" >> dashboard.py
@@ -221,7 +221,7 @@ git branch -v  # Verbose branch info
 **Instructions:**
 1. Switch to main:
    ```bash
-   git checkout main
+   git switch main
    ```
 
 2. Merge the dashboard branch:
@@ -278,7 +278,7 @@ git branch
 **Instructions:**
 1. Create and switch to a new branch:
    ```bash
-   git checkout -b feature-conflict
+   git switch -c feature-conflict
    ```
 
 2. Modify README.md:
@@ -297,7 +297,7 @@ git branch
 
 4. Switch back to main:
    ```bash
-   git checkout main
+   git switch main
    ```
 
 5. Make a different change to README.md on main:
@@ -464,7 +464,7 @@ git branch -a  # All branches (local + remote)
 **Instructions:**
 1. Start new feature:
    ```bash
-   git checkout -b feature-api
+   git switch -c feature-api
    ```
 
 2. Work on feature:
@@ -478,7 +478,7 @@ git branch -a  # All branches (local + remote)
 
 3. Switch to main and merge:
    ```bash
-   git checkout main
+   git switch main
    git merge feature-api
    git branch -d feature-api
    ```
@@ -523,7 +523,7 @@ rm -rf git-branching-practice
 **Solution:** Resolve conflicts, then `git add` and `git commit`.
 
 ### "Not currently on any branch"
-**Solution:** You're in detached HEAD state. Create a branch: `git checkout -b temp-branch`
+**Solution:** You're in detached HEAD state. Create a branch: `git switch -c temp-branch`
 
 ### "fatal: Not a valid object name"
 **Solution:** Branch or commit doesn't exist. Check with `git branch -a`
@@ -560,8 +560,8 @@ rm -rf git-branching-practice
 ```bash
 git branch              # List branches
 git branch <name>       # Create branch
-git checkout <name>     # Switch branch
-git checkout -b <name>  # Create and switch
+git switch <name>       # Switch branch
+git switch -c <name>    # Create and switch
 git merge <branch>      # Merge branch into current
 git branch -d <name>    # Delete merged branch
 git branch -D <name>    # Force delete branch
@@ -574,25 +574,25 @@ git log --graph --oneline  # View branch history
 
 ### Feature Development
 ```bash
-git checkout -b feature/new-feature
+git switch -c feature/new-feature
 # Work on feature
-git checkout main
+git switch main
 git merge feature/new-feature
 git branch -d feature/new-feature
 ```
 
 ### Bug Fixes
 ```bash
-git checkout -b fix/bug-name
+git switch -c fix/bug-name
 # Fix the bug
-git checkout main
+git switch main
 git merge fix/bug-name
 git branch -d fix/bug-name
 ```
 
 ### Experimentation
 ```bash
-git checkout -b experiment/idea
+git switch -c experiment/idea
 # Try new things
 # If successful, merge to main
 # If not, delete branch

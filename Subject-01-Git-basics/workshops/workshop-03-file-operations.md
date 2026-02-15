@@ -441,9 +441,183 @@ git mv hello.py main.py
 
 ---
 
-## Part 10: Cleanup (Optional)
+## Part 9: Restoring Files and Viewing File History
 
-### Step 19: Remove Test Repository
+### Step 17: Understanding File Restoration
+
+**What you'll do:** Learn how to restore files to previous states using `git restore`.
+
+**Discussion Points:**
+- `git restore` is the modern way to undo changes (replaces some uses of `git checkout` and `git reset`)
+- You can restore files to HEAD (last commit) or to a specific commit
+- Restoration can affect working directory, staging area, or both
+
+### Step 18: Restore Files to Last Commit (HEAD)
+
+**Instructions:**
+1. Make some changes to a file:
+   ```bash
+   echo "# This is a bad change" >> hello.py
+   echo "print('This should not be here')" >> hello.py
+   ```
+
+2. Check status:
+   ```bash
+   git status
+   ```
+
+3. Restore the file to its last committed state:
+   ```bash
+   git restore hello.py
+   ```
+
+4. Verify the changes are gone:
+   ```bash
+   git status
+   cat hello.py
+   ```
+
+**Discussion:** What happened to your changes? This is useful when you make unwanted changes to a file.
+
+### Step 19: Restore Files to a Specific Commit
+
+**Instructions:**
+1. First, check the commit history:
+   ```bash
+   git log --oneline
+   ```
+
+2. Make a change and commit it:
+   ```bash
+   echo "# Temporary feature" >> hello.py
+   git add hello.py
+   git commit -m "Add temporary feature"
+   ```
+
+3. Make another change:
+   ```bash
+   echo "# Another change" >> hello.py
+   git add hello.py
+   git commit -m "Add another change"
+   ```
+
+4. Restore to the first commit (replace `abc1234` with actual commit hash):
+   ```bash
+   git log --oneline  # Note the commit hashes
+   git restore --source=HEAD~2 hello.py  # Restore to 2 commits ago
+   ```
+
+5. Check what happened:
+   ```bash
+   cat hello.py
+   git status
+   ```
+
+### Step 20: View File History and Changes
+
+**What you'll do:** Learn to see who changed what and when in specific files.
+
+**Instructions:**
+1. View commit history for a specific file:
+   ```bash
+   git log --follow --oneline hello.py
+   ```
+
+2. See detailed changes to a file over time:
+   ```bash
+   git log -p --follow hello.py
+   ```
+
+3. See who made changes to each line (blame):
+   ```bash
+   git blame hello.py
+   ```
+
+4. See a more readable blame output:
+   ```bash
+   git blame -C hello.py  # Also detects moved/copied lines
+   ```
+
+**Expected Output for `git blame`:**
+```
+abc1234 (Your Name 2024-01-15 10:30:00 +0000 1) def greet(name):
+def5678 (Your Name 2024-01-15 11:45:00 +0000 2)     return f'Hello, {name}!'
+abc1234 (Your Name 2024-01-15 10:30:00 +0000 3) 
+def5678 (Your Name 2024-01-15 11:45:00 +0000 4) print(greet('Git User'))
+```
+
+**Discussion Points:**
+- What does each column in `git blame` output represent?
+- How can `git log --follow` help you understand file evolution?
+- When would you use `git restore --source=<commit>` vs `git checkout <commit> <file>`?
+
+### Step 21: Restore from Staging Area
+
+**Instructions:**
+1. Stage a file with unwanted changes:
+   ```bash
+   echo "# Unwanted staged change" >> hello.py
+   git add hello.py
+   git status
+   ```
+
+2. Restore from staging area only (keep working directory changes):
+   ```bash
+   git restore --staged hello.py
+   git status
+   ```
+
+3. Or restore both staging area and working directory:
+   ```bash
+   git restore hello.py  # Removes from staging and working directory
+   ```
+
+---
+
+## Part 10: More File Operations (Continued)
+
+### Step 22: Rename Files (Review)
+
+**Instructions:**
+```bash
+# Rename using Git command
+git mv hello.py main.py
+
+# Or manually (then add)
+# mv hello.py main.py
+# git rm hello.py
+# git add main.py
+```
+
+### Step 23: Remove Files (Review)
+
+**Instructions:**
+1. Remove a file:
+   ```bash
+   git rm test.txt
+   ```
+
+2. Remove from working directory only:
+   ```bash
+   rm styles/main.css
+   git add styles/main.css  # Stage the deletion
+   ```
+
+3. Commit changes:
+   ```bash
+   git commit -m "Rename hello.py to main.py and remove test files"
+   ```
+
+4. Push changes:
+   ```bash
+   git push
+   ```
+
+---
+
+## Part 11: Cleanup (Optional)
+
+### Step 24: Remove Test Repository
 
 **Instructions:** (Only if you want to clean up)
 ```bash
@@ -464,6 +638,10 @@ rm -rf git-file-practice
 - [ ] Pushed commits to GitHub
 - [ ] Renamed and removed files
 - [ ] Viewed commit history and diffs
+- [ ] Used `git restore` to undo working directory changes
+- [ ] Restored files to specific commits using `--source`
+- [ ] Used `git log --follow` to view file history
+- [ ] Used `git blame` to see who made changes to each line
 
 ---
 
@@ -503,6 +681,9 @@ git push
 ✅ **File Management:** Renamed and removed files with Git
 ✅ **History Analysis:** Viewed and compared commit history
 ✅ **Selective Staging:** Used interactive add for precise control
+✅ **File Restoration:** Used `git restore` to undo changes safely
+✅ **File History:** Tracked changes to individual files over time
+✅ **Change Attribution:** Identified who made specific changes with `git blame`
 
 ---
 
@@ -525,6 +706,11 @@ git add -p            # Interactive staging
 git commit -m "msg"   # Commit staged changes
 git diff              # View unstaged changes
 git diff --staged     # View staged changes
+git restore <file>    # Restore file to HEAD
+git restore --source=<commit> <file>  # Restore to specific commit
+git restore --staged <file>  # Unstage file
+git log --follow <file>  # View file history
+git blame <file>      # See who changed each line
 git mv <old> <new>    # Rename file
 git rm <file>         # Remove file
 git push              # Push to remote
@@ -573,4 +759,5 @@ You've mastered Git file operations! You can now:
 - Multiple commits with good history
 - All your practice files
 - Professional development workflow
+- File restoration and history tracking capabilities
 - Ready for collaboration and further development
