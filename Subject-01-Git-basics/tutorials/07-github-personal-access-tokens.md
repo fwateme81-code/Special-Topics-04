@@ -116,6 +116,22 @@ When adding a remote to an existing repository:
 git remote add origin https://YOUR_USERNAME:YOUR_PAT@github.com/YOUR_USERNAME/repo.git
 ```
 
+#### For Updating Existing Remote Origins
+If you cloned a repository without authentication and now can't push:
+
+```bash
+# Check current remote URL
+git remote -v
+
+# Update the origin URL with your PAT
+git remote set-url origin https://YOUR_USERNAME:YOUR_PAT@github.com/YOUR_USERNAME/repo.git
+
+# Now you can push
+git push origin main
+```
+
+**Common Scenario:** You clone a public repository, make changes, but get authentication errors when trying to push. This happens because you need authentication to push, even if you could clone without it.
+
 #### For Existing Repositories
 If you have an existing repository with authentication issues:
 
@@ -174,6 +190,17 @@ If you suspect a token is compromised:
 - Check that your PAT hasn't expired
 - Ensure the token has the correct scopes
 - Try regenerating the token
+
+### "Permission denied" when pushing to cloned repository
+**Cause:** You cloned a repository without authentication, but pushing requires authentication.
+**Solution:**
+```bash
+# Update the remote URL with your PAT
+git remote set-url origin https://YOUR_USERNAME:YOUR_PAT@github.com/YOUR_USERNAME/repo.git
+
+# Then push
+git push origin main
+```
 
 ### "Repository not found" Error
 - Check repository permissions
